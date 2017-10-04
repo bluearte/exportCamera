@@ -1,4 +1,7 @@
 # Maya 2015
+# This script was made as an alternative way to modify render layer
+# Working with a lot of data make the layer itself heavy to switch and changing data between another
+# With this, I found it a bit lighter to modify and remove the data within the layer
 import pymel.core as pm
 import maya.cmds as mc
 import functools
