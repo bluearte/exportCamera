@@ -1,3 +1,7 @@
+# This is export Camera
+# Cannot perform if file has not been saved
+
+
 from PySide.QtCore import *
 from PySide.QtGui import *
 
