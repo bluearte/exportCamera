@@ -1,0 +1,98 @@
+from Qt import QtWidgets
+from Qt import QtGui
+from Qt import QtCore
+
+class MayaWindows(QtWidgets.QWidget):
+    def __init__(self):
+        super(MayaWindows, self).__init__()
+        
+        self.initUI()
+        
+        self.setGeometry( 300, 300, 500, 300 )
+        self.setWindowOpacity(20)
+        
+        
+    def initUI(self):
+        
+        self.line = QtWidgets.QLineEdit()
+        self.line.setText("Test Line Edit")
+        self.myTable = MayaTable()
+        
+        self.layout1 = QtWidgets.QVBoxLayout()
+        self.layout1.addWidget(self.line)
+        self.layout1.addWidget(self.myTable)
+        
+        self.setLayout(self.layout1)
+        
+        self.setLineStyleSheet()
+        
+    def setLineStyleSheet(self):
+        style = "QLineEdit {color : red}"
+        self.setStyleSheet(style)
+
+class MayaTable(QtWidgets.QTableWidget):
+    def __init__(self):
+        super(MayaTable, self).__init__()
+        
+        self.setTableStyleSheet()
+        
+        data = self.getData()
+        self.setRowCount(len(data.keys()))
+        
+        horizontalHeader = ["Name", "Age", "Gender", "CheckBox", "ComboBox"]
+        self.setColumnCount(len(horizontalHeader))
+
+        self.setHorizontalHeaderLabels(horizontalHeader)
+        self.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
+        self.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
+        self.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
+        self.setAlternatingRowColors(True)
+        self.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.horizontalHeader().setResizeMode(QtWidgets.QHeaderView.Stretch)
+        
+        for x, key in enumerate(data):
+            self.setItem(x, 0, QtWidgets.QTableWidgetItem(key))
+            self.setItem(x, 1, QtWidgets.QTableWidgetItem(str(data[key]["age"])))
+            self.setItem(x, 2, QtWidgets.QTableWidgetItem(data[key]["gender"]))
+            
+            check_box = QtWidgets.QCheckBox()
+            self.setCellWidget(x, 3, check_box)
+            
+            combo_box = QtWidgets.QComboBox()
+            combo_box.addItems(["Item1","Item2"])
+            self.setCellWidget(x, 4, combo_box)
+        
+    def getData(self):
+        data = dict()
+        data ["Efrizal"] = {"age" : 26, "gender" : "male"}
+        data ["Hardiman"] = {"age" : 30, "gender" : "male"}
+        data ["Riza"] = {"age" : 17, "gender" : "female"}
+        return data
+        
+    def setTableStyleSheet(self):
+        style = """ QTableWidget { color : black ; 
+                                   background : white ; 
+                                   selection-background-color:qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                                                              stop: 0 #D7F4F7, stop: 0.4 #CEECF0,
+                                                                              stop: 0.6 #C5E4E8, stop: 1.0 #D7F4F7);
+                                   selection-color:black ;
+                                   alternate-background-color : rgb(255,245,240) ;
+                                   header-color : blue }
+                    
+                    QTableWidget QTableCornerButton::section { background-color: #646464;
+                                                               border: 1px solid #fffff8;
+                                                             }
+                    QHeaderView::section { background-color: #646464;
+                                           padding: 4px;
+                                           border: 1px solid #fffff8;
+                                           font-size: 14pt;
+                                           border-style: dash-line;
+                                         }
+                    
+                    QComboBox { color: black ; background : transparent } 
+                    
+                    QComboBox:hover { selection-background-color: yellow} """
+        self.setStyleSheet(style)
+
+mayaWindows = MayaWindows()
+mayaWindows.show()
