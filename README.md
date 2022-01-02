@@ -1,1 +1,1 @@
-# Maya-Examples
+# Export camera as alembic and FBX
